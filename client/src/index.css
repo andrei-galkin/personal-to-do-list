@@ -1,11 +1,11 @@
 /* ── Color Tokens ───────────────────────────────────────────────────────────── */
 
 :root {
-  --color-primary:        #3b1a0a;   /* dark brown */
-  --color-primary-light:  #6b3a1f;   /* medium brown */
-  --color-primary-hover:  #2a1007;   /* deeper brown for hover */
-  --color-primary-shadow: rgba(59, 26, 10, 0.25);
-  --color-primary-subtle: #f5ede8;   /* warm off-white tint */
+  --color-primary:        #065f46;   /* emerald 800 (darker) */
+  --color-primary-light:  #047857;   /* emerald 700 (still rich) */
+  --color-primary-hover:  #064e3b;   /* emerald 900 (deepest hover) */
+  --color-primary-shadow: rgba(6, 95, 70, 0.25);
+  --color-primary-subtle: #ecfdf5;   /* light green tint */
 }
 
 /* ── App Shell ──────────────────────────────────────────────────────────────── */
@@ -29,7 +29,7 @@
 
 .task-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 26, 10, 0.12) !important;
+  box-shadow: 0 6px 20px rgba(4, 120, 87, 0.12) !important;
 }
 
 .task-completed {
@@ -105,7 +105,7 @@
 
 ::-webkit-scrollbar        { width: 6px; }
 ::-webkit-scrollbar-track  { background: transparent; }
-::-webkit-scrollbar-thumb  { background-color: #c9a99a; border-radius: 3px; }
+::-webkit-scrollbar-thumb  { background-color: #34d399; border-radius: 3px; }
 
 /* ── Badge tweaks ───────────────────────────────────────────────────────────── */
 
