@@ -3,7 +3,7 @@ version: '3.9'
 services:
   mongo:
     image: mongo:7.0
-    container_name: taskflow-mongo
+    container_name: personal-todo-mongo
     restart: unless-stopped
     ports:
       - '27017:27017'           # exposes MongoDB to your local machine
@@ -20,7 +20,7 @@ services:
 
   mongo-express:                # optional: web UI to browse your DB
     image: mongo-express:1.0.2
-    container_name: taskflow-mongo-ui
+    container_name: personal-todo-mongo-ui
     restart: unless-stopped
     ports:
       - '8081:8081'             # open http://localhost:8081

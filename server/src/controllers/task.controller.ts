@@ -1,17 +1,23 @@
 import { Request, Response, NextFunction } from "express";
 import { z, ZodError } from "zod";
-import { taskRepository } from "../repositories/taskRepository";
+import { taskRepository } from "../repositories/task.repository";
 import { AppError } from "../middleware/errorHandler";
 
 // ─── Validation Schemas ───────────────────────────────────────────────────────
 
+const TaskStatusEnum = z.enum(["ACTIVE", "IN_PROGRESS", "DONE"]);
+
 const CreateTaskSchema = z.object({
   title: z.string().min(1, "Title is required").max(100, "Title must be ≤ 100 characters"),
   description: z.string().max(500, "Description must be ≤ 500 characters").optional().default(""),
-  completed: z.boolean().default(false),
+  status: TaskStatusEnum.default("ACTIVE"),
 });
 
-const UpdateTaskSchema = CreateTaskSchema.partial();
+const UpdateTaskSchema = z.object({
+  title: z.string().min(1).max(100).optional(),
+  description: z.string().max(500).optional(),
+  status: TaskStatusEnum.optional(),
+});
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -32,14 +38,12 @@ const parseId = (raw: string): number => {
 
 export const getAllTasks = (req: Request, res: Response, next: NextFunction): void => {
   try {
-    const { completed, page = "1", limit = "20" } = req.query;
-
+    const { status, page = "1", limit = "100" } = req.query;
     const result = taskRepository.findAll({
-      completed: completed !== undefined ? completed === "true" : undefined,
+      status: status as string | undefined,
       page: Math.max(1, parseInt(page as string, 10)),
       limit: Math.min(100, Math.max(1, parseInt(limit as string, 10))),
     });
-
     res.json({ success: true, ...result });
   } catch (err) {
     next(err);
@@ -67,7 +71,6 @@ export const createTask = (req: Request, res: Response, next: NextFunction): voi
       res.status(400).json({ success: false, message: "Validation failed", errors: formatZodError(parsed.error) });
       return;
     }
-
     const task = taskRepository.create(parsed.data);
     res.status(201).json({ success: true, data: task });
   } catch (err) {
@@ -84,7 +87,6 @@ export const updateTask = (req: Request, res: Response, next: NextFunction): voi
       res.status(400).json({ success: false, message: "Validation failed", errors: formatZodError(parsed.error) });
       return;
     }
-
     const task = taskRepository.update(parseId(req.params.id), parsed.data);
     if (!task) throw new AppError("Task not found", 404);
     res.json({ success: true, data: task });
@@ -100,18 +102,6 @@ export const deleteTask = (req: Request, res: Response, next: NextFunction): voi
     const deleted = taskRepository.delete(parseId(req.params.id));
     if (!deleted) throw new AppError("Task not found", 404);
     res.json({ success: true, message: "Task deleted successfully" });
-  } catch (err) {
-    next(err);
-  }
-};
-
-// ─── PATCH /api/tasks/:id/toggle ─────────────────────────────────────────────
-
-export const toggleTask = (req: Request, res: Response, next: NextFunction): void => {
-  try {
-    const task = taskRepository.toggle(parseId(req.params.id));
-    if (!task) throw new AppError("Task not found", 404);
-    res.json({ success: true, data: task });
   } catch (err) {
     next(err);
   }

@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import taskRoutes from "./routes/taskRoutes";
+import taskRoutes from "./routes/task.routes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 
 const app = express();

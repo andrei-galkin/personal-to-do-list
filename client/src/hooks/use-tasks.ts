@@ -1,13 +1,24 @@
 import { useState, useEffect, useCallback } from "react";
 import { taskService } from "../services/taskService";
-import type { Task, CreateTaskInput, UpdateTaskInput, FilterStatus, TaskStats } from "@todo/shared";
-import type { UseTasksReturn } from "../types/hook-types";
+import type { Task, CreateTaskInput, UpdateTaskInput, TaskStatus, TaskStats } from "../../../shared/types";
+
+export interface UseTasksReturn {
+  tasks: Task[];
+  loading: boolean;
+  error: string | null;
+  stats: TaskStats;
+  addTask: (input: CreateTaskInput) => Promise<void>;
+  updateTask: (id: string, input: UpdateTaskInput) => Promise<void>;
+  moveTask: (id: string, status: TaskStatus) => Promise<void>;
+  removeTask: (id: string) => Promise<void>;
+  clearError: () => void;
+  refresh: () => Promise<void>;
+}
 
 export const useTasks = (): UseTasksReturn => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<FilterStatus>("all");
 
   // ─── Fetch ────────────────────────────────────────────────────────────────
 
@@ -24,22 +35,15 @@ export const useTasks = (): UseTasksReturn => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
+  useEffect(() => { fetchTasks(); }, [fetchTasks]);
 
-  // ─── Derived State ────────────────────────────────────────────────────────
-
-  const filteredTasks = tasks.filter((t) => {
-    if (filter === "active") return !t.completed;
-    if (filter === "completed") return t.completed;
-    return true;
-  });
+  // ─── Derived Stats ────────────────────────────────────────────────────────
 
   const stats: TaskStats = {
-    total: tasks.length,
-    completed: tasks.filter((t) => t.completed).length,
-    active: tasks.filter((t) => !t.completed).length,
+    total:      tasks.length,
+    completed:  tasks.filter((t) => t.status === "DONE").length,
+    inProgress: tasks.filter((t) => t.status === "IN_PROGRESS").length,
+    active:     tasks.filter((t) => t.status === "ACTIVE").length,
   };
 
   // ─── Mutations ────────────────────────────────────────────────────────────
@@ -47,8 +51,8 @@ export const useTasks = (): UseTasksReturn => {
   const addTask = useCallback(async (input: CreateTaskInput) => {
     try {
       setError(null);
-      const newTask = await taskService.create(input);
-      setTasks((prev) => [newTask, ...prev]);
+      const task = await taskService.create(input);
+      setTasks((prev) => [task, ...prev]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create task");
       throw err;
@@ -66,6 +70,21 @@ export const useTasks = (): UseTasksReturn => {
     }
   }, []);
 
+  // Optimistic status move for instant drag-and-drop feel
+  const moveTask = useCallback(async (id: string, status: TaskStatus) => {
+    setTasks((prev) =>
+      prev.map((t) => t._id === id ? { ...t, status, completed: status === "DONE" } : t)
+    );
+    try {
+      const updated = await taskService.update(id, { status });
+      setTasks((prev) => prev.map((t) => (t._id === id ? updated : t)));
+    } catch (err) {
+      // Rollback
+      await fetchTasks();
+      setError(err instanceof Error ? err.message : "Failed to move task");
+    }
+  }, [fetchTasks]);
+
   const removeTask = useCallback(async (id: string) => {
     try {
       setError(null);
@@ -77,38 +96,7 @@ export const useTasks = (): UseTasksReturn => {
     }
   }, []);
 
-  const toggleTask = useCallback(async (id: string) => {
-    // Optimistic update
-    setTasks((prev) =>
-      prev.map((t) => (t._id === id ? { ...t, completed: !t.completed } : t))
-    );
-    try {
-      const updated = await taskService.toggle(id);
-      setTasks((prev) => prev.map((t) => (t._id === id ? updated : t)));
-    } catch (err) {
-      // Rollback on failure
-      setTasks((prev) =>
-        prev.map((t) => (t._id === id ? { ...t, completed: !t.completed } : t))
-      );
-      setError(err instanceof Error ? err.message : "Failed to toggle task");
-    }
-  }, []);
-
   const clearError = useCallback(() => setError(null), []);
 
-  return {
-    tasks,
-    filteredTasks,
-    loading,
-    error,
-    filter,
-    stats,
-    setFilter,
-    addTask,
-    updateTask,
-    removeTask,
-    toggleTask,
-    clearError,
-    refresh: fetchTasks,
-  };
+  return { tasks, loading, error, stats, addTask, updateTask, moveTask, removeTask, clearError, refresh: fetchTasks };
 };

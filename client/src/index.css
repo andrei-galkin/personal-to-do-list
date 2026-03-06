@@ -125,3 +125,16 @@ textarea.form-control {
 .text-primary {
   color: var(--color-primary) !important;
 }
+
+/* ── Kanban ─────────────────────────────────────────────────────────────────── */
+
+.task-card[draggable="true"]:active {
+  opacity: 0.6;
+  transform: rotate(1.5deg) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+.task-card[draggable="true"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1) !important;
+}
