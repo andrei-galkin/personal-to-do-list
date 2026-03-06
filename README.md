@@ -67,6 +67,15 @@ todo-app/
 
 ---
 
+## Naming Conventions
+
+- **React components** (in `client/src/components/`) use **PascalCase** and are exported as named components (e.g. `TaskForm.tsx`).
+- **Hooks** are named `useXxx` (e.g. `useTasks.ts`).
+- **Service / repository modules** use **camelCase**, matching the exported instance (e.g. `taskService.ts`, `taskRepository.ts`).
+- **Imports must match file name casing exactly** (important for Linux/CI) even though Windows is case-insensitive.
+
+---
+
 ## API Reference
 
 | Method | Endpoint                  | Description                     |
