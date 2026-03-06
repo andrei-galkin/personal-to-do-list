@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: taskflow-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'           # exposes MongoDB to your local machine
+    environment:
+      MONGO_INITDB_DATABASE: todoapp
+    volumes:
+      - mongo_data:/data/db     # persist data between restarts
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', 'db.adminCommand("ping")']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  mongo-express:                # optional: web UI to browse your DB
+    image: mongo-express:1.0.2
+    container_name: taskflow-mongo-ui
+    restart: unless-stopped
+    ports:
+      - '8081:8081'             # open http://localhost:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
+    driver: local

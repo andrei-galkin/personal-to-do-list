@@ -1,28 +1,38 @@
-# Angular specific
+# Node modules
+**/node_modules/
+
+# Build outputs
 /dist/
+/build/
+/out/
 /out-tsc/
-/tmp/
-/coverage/
-/e2e/test-output/
-/.angular/
-.angular/
-
-# Node modules and dependency files
-/node_modules/
-/package-lock.json
-/yarn.lock
-
-# Environment files
-/.env
-
-# Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
-
-# TypeScript cache
-*.tsbuildinfo
+/client/dist/
+/client/.vite/
+/server/dist/
 
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Runtime files
+.env
+.env.*
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Misc
+.DS_Store
+npm-shrinkwrap.json
+
+# Docker
+docker-compose.override.yml
+
+# Optional lockfiles (uncomment if you want to commit)
+# /package-lock.json
+# /yarn.lock
