@@ -2,6 +2,8 @@
 
 A personal full-stack To-Do list app built with **React + TypeScript** (frontend) and **Express + SQLite** (backend), demonstrating scalable architecture and production best practices.
 
+![Main screen](main_screen.PNG)
+
 ---
 
 ## Tech Stack

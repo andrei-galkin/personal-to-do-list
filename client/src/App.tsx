@@ -3,7 +3,7 @@ import { useTasks } from "./hooks/use-tasks";
 import { TaskForm } from "./components/TaskForm";
 import { KanbanBoard } from "./components/kanban/KanbanBoard";
 import { EditTaskModal } from "./components/kanban/EditTaskModal";
-import type { Task, TaskFormValues } from "../../../shared/types";
+import type { Task, TaskFormValues } from "../../shared/types";
 
 export default function App() {
   const { tasks, loading, error, stats, addTask, updateTask, moveTask, removeTask, clearError, refresh } = useTasks();
