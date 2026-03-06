@@ -1,4 +1,4 @@
-import { db, toTask, TaskEntity } from "../models/task.model";
+import { db, toTask, TaskEntity } from "../models/taskModel";
 import type { Task, CreateTaskInput, UpdateTaskInput, PaginatedResponse } from "../../../shared/types";
 
 // ─── Query Options ────────────────────────────────────────────────────────────

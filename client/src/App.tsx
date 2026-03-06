@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTasks } from "./hooks/use-tasks";
+import { useTasks } from "./hooks/useTasks";
 import { TaskForm } from "./components/TaskForm";
 import { KanbanBoard } from "./components/kanban/KanbanBoard";
 import { EditTaskModal } from "./components/kanban/EditTaskModal";

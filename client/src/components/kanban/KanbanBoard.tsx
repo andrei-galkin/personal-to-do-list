@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import type { KanbanBoardProps } from "../../types/component-props";
-import type { TaskStatus } from "../../../../shared/types";
-import { KANBAN_COLUMNS } from "../../../../shared/types";
+import type { KanbanBoardProps } from "../../types/componentProps";
+import type { TaskStatus } from "@todo/shared";
+import { KANBAN_COLUMNS } from "@todo/shared";
 import { KanbanColumn } from "./KanbanColumn";
 
 export const KanbanBoard = ({ tasks, onStatusChange, onEdit, onDelete }: KanbanBoardProps) => {

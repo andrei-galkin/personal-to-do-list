@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z, ZodError } from "zod";
-import { taskRepository } from "../repositories/task.repository";
+import { taskRepository } from "../repositories/taskRepository";
 import { AppError } from "../middleware/errorHandler";
 
 // ─── Validation Schemas ───────────────────────────────────────────────────────

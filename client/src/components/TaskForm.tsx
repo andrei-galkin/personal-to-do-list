@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { z } from "zod";
-import type { TaskFormProps } from "../types/component-props";
-import type { Task, TaskFormValues } from "@todo/shared";
+import type { TaskFormProps } from "../types/componentProps";
+import type { TaskFormValues } from "@todo/shared";
 
 // ─── Validation Schema ────────────────────────────────────────────────────────
 

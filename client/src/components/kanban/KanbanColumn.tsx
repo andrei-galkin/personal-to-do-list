@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { KanbanColumnProps } from "../../types/component-props";
-import type { TaskStatus } from "../../../../../shared/types";
+import type { KanbanColumnProps } from "../../types/componentProps";
+import type { TaskStatus } from "@todo/shared";
 import { TaskCard } from "./TaskCard";
 
 export const KanbanColumn = ({ column, tasks, onDragStart, onDrop, onEdit, onDelete }: KanbanColumnProps) => {

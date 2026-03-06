@@ -1,4 +1,4 @@
-import type { FilterBarProps } from "../types/component-props";
+import type { FilterBarProps } from "../types/componentProps";
 import type { FilterStatus } from "@todo/shared";
 
 const FILTERS: { key: FilterStatus; label: string; icon: string }[] = [

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import type { EditTaskModalProps } from "../../types/component-props";
+import type { EditTaskModalProps } from "../../types/componentProps";
 import { TaskForm } from "../TaskForm";
 
 export const EditTaskModal = ({ task, onSave, onClose }: EditTaskModalProps) => {

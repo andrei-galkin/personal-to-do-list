@@ -49,8 +49,8 @@ todo-app/
     │   ├── App.tsx           ← Root component & layout
     │   ├── index.css         ← Global styles
     │   ├── types/
-    │   │   ├── component-props.ts  ← shared component prop types
-    │   │   └── hook-types.ts       ← shared hook return types
+    │   │   ├── componentProps.ts  ← shared component prop types
+    │   │   └── hookTypes.ts       ← shared hook return types
     │   ├── services/
     │   │   └── taskService.ts ← Axios service layer
     │   ├── hooks/

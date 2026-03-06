@@ -1,7 +1,31 @@
-// client/src/types/component-props.ts
+// client/src/types/componentProps.ts
 // All React component prop interfaces in one place.
 
-import type { Task, TaskFormValues, TaskStatus, TaskStats, KanbanColumn } from "../../../../shared/types";
+import type {
+  Task,
+  TaskFormValues,
+  TaskStatus,
+  TaskStats,
+  KanbanColumn,
+  FilterStatus,
+} from "@todo/shared";
+
+// ─── FilterBar ─────────────────────────────────────────────────────────────────
+
+export interface FilterBarProps {
+  filter: FilterStatus;
+  stats: TaskStats;
+  onFilterChange: (filter: FilterStatus) => void;
+}
+
+// ─── TaskItem ──────────────────────────────────────────────────────────────────
+
+export interface TaskItemProps {
+  task: Task;
+  onToggle: (id: string) => void;
+  onUpdate: (id: string, values: TaskFormValues) => Promise<void>;
+  onDelete: (id: string) => void;
+}
 
 // ─── TaskForm ─────────────────────────────────────────────────────────────────
 

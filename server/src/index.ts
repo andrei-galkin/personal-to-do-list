@@ -1,6 +1,6 @@
 import "dotenv/config";
 import app from "./app";
-import { db } from "./models/task.model";
+import { db } from "./models/taskModel";
 
 const PORT = Number(process.env.PORT ?? 5000);
 

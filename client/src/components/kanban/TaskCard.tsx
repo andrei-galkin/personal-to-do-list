@@ -1,6 +1,7 @@
-import type { TaskCardProps } from "../../types/component-props";
+import type { TaskCardProps } from "../../types/componentProps";
+import type { TaskStatus } from "@todo/shared";
 
-const STATUS_BADGE = {
+const STATUS_BADGE: Record<TaskStatus, { cls: string; label: string }> = {
   ACTIVE:      { cls: "bg-warning-subtle text-warning border border-warning-subtle",  label: "Active"      },
   IN_PROGRESS: { cls: "bg-primary-subtle text-primary border border-primary-subtle",  label: "In Progress" },
   DONE:        { cls: "bg-success-subtle text-success border border-success-subtle",  label: "Done"        },

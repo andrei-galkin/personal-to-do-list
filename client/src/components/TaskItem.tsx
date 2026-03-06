@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { TaskItemProps } from "../types/component-props";
+import type { TaskItemProps } from "../types/componentProps";
 import type { TaskFormValues } from "@todo/shared";
 import { TaskForm } from "./TaskForm";
 

@@ -1,7 +1,7 @@
-// client/src/types/hook-types.ts
+// client/src/types/hookTypes.ts
 // Return type interfaces for custom hooks.
 
-import type { Task, CreateTaskInput, UpdateTaskInput, TaskStatus, TaskStats } from "../../../../shared/types";
+import type { Task, CreateTaskInput, UpdateTaskInput, TaskStatus, TaskStats } from "@todo/shared";
 
 // ─── useTasks ─────────────────────────────────────────────────────────────────
 
