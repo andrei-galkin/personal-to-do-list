@@ -66,12 +66,12 @@ export const getTaskById = (req: Request, res: Response, next: NextFunction): vo
 
 export const createTask = (req: Request, res: Response, next: NextFunction): void => {
   try {
-    const parsed = CreateTaskSchema.safeParse(req.body);
-    if (!parsed.success) {
-      res.status(400).json({ success: false, message: "Validation failed", errors: formatZodError(parsed.error) });
+    const parsedTask = CreateTaskSchema.safeParse(req.body);
+    if (!parsedTask.success) {
+      res.status(400).json({ success: false, message: "Validation failed", errors: formatZodError(parsedTask.error) });
       return;
     }
-    const task = taskRepository.create(parsed.data);
+    const task = taskRepository.create(parsedTask.data);
     res.status(201).json({ success: true, data: task });
   } catch (err) {
     next(err);

@@ -1,7 +1,7 @@
 import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
-import type { Task, TaskStatus } from "../../../shared/types";
+import { Task, TaskStatus } from "../../../shared/types";
 
 // ─── Database Setup ───────────────────────────────────────────────────────────
 
